@@ -44,6 +44,10 @@ api:
 build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
+.PHONY: wire
+wire:
+	@wire gen ./cmd/server
+
 .PHONY: generate
 # generate
 generate:
