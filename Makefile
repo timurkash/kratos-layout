@@ -80,7 +80,8 @@ help:
 
 .PHONY: test
 test:
-	GO111MODULE=on go test -v -race -cover ./internal/service
-	GO111MODULE=on go test ./internal/service -coverprofile=coverage.out
-	go tool cover -func=coverage.out
-	go tool cover -html=coverage.out -o coverage.html
+	@GO111MODULE=on go test -v -race -cover ./internal/service
+	@GO111MODULE=on go test ./internal/service -coverprofile=coverage.out
+	@go tool cover -func=coverage.out
+	@go tool cover -html=coverage.out -o coverage.html
+	@firefox coverage.html
