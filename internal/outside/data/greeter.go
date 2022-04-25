@@ -19,10 +19,10 @@ func NewGreeterRepo(data *Data, logger log.Logger) biz.GreeterRepo {
 	}
 }
 
-func (r *greeterRepo) CreateGreeter(ctx context.Context, g *biz.Greeter) error {
+func (r *greeterRepo) CreateGreeter(ctx context.Context, greeter *biz.Greeter) error {
 	return nil
 }
 
-func (r *greeterRepo) UpdateGreeter(ctx context.Context, g *biz.Greeter) error {
+func (r *greeterRepo) UpdateGreeter(ctx context.Context, greeter *biz.Greeter) error {
 	return nil
 }
