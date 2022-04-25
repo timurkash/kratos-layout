@@ -60,18 +60,23 @@ func main() {
 			file.NewSource(flagconf),
 		),
 	)
-	defer c.Close()
+	defer func() {
+		err := c.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	if err := c.Load(); err != nil {
 		panic(err)
 	}
 
-	var bc conf.Bootstrap
-	if err := c.Scan(&bc); err != nil {
+	var bootstrap conf.Bootstrap
+	if err := c.Scan(&bootstrap); err != nil {
 		panic(err)
 	}
 
-	app, cleanup, err := initApp(bc.Server, bc.Data, logger)
+	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Data, logger)
 	if err != nil {
 		panic(err)
 	}
