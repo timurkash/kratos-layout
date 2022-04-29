@@ -9,6 +9,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
+	sentryKratos "github.com/go-kratos/sentry"
 )
 
 // NewGRPCServer new a gRPC server.
@@ -16,6 +17,7 @@ func NewGRPCServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
+			sentryKratos.Server(),
 			tracing.Server(),
 			logging.Server(logger),
 		),

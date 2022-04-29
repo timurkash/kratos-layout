@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/getsentry/sentry-go"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"os"
 
@@ -20,14 +21,14 @@ var (
 	Name string
 	// Version is the version of the compiled software.
 	Version string
-	// flagconf is the config flag.
-	flagconf string
+	// flagConf is the config flag.
+	flagConf string
 
 	id, _ = os.Hostname()
 )
 
 func init() {
-	flag.StringVar(&flagconf, "conf", "./configs", "config path, eg: -conf config.yaml")
+	flag.StringVar(&flagConf, "conf", "./configs", "config path, eg: -conf config.yaml")
 }
 
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
@@ -57,7 +58,7 @@ func main() {
 	)
 	c := config.New(
 		config.WithSource(
-			file.NewSource(flagconf),
+			file.NewSource(flagConf),
 		),
 	)
 	defer func() {
@@ -74,6 +75,23 @@ func main() {
 	var bootstrap conf.Bootstrap
 	if err := c.Scan(&bootstrap); err != nil {
 		panic(err)
+	}
+
+	//if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
+	//	panic(err)
+	//}
+	//log.Info("tracer provider", bootstrap.Trace.Endpoint)
+
+	if bootstrap.Sentry != nil {
+		if err := sentry.Init(
+			sentry.ClientOptions{
+				Dsn:              bootstrap.Sentry.Dns,
+				AttachStacktrace: true,
+			},
+		); err != nil {
+			panic(err)
+		}
+		log.Info("sentry", bootstrap.Sentry.Dns)
 	}
 
 	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Data, logger)
