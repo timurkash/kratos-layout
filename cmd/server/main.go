@@ -77,21 +77,27 @@ func main() {
 		panic(err)
 	}
 
-	//if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
-	//	panic(err)
+	//if bootstrap.Trace != nil {
+	//	if bootstrap.Trace.Endpoint != "" {
+	//		if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
+	//			panic(err)
+	//		}
+	//		log.Info("tracer provider", bootstrap.Trace.Endpoint)
+	//	}
 	//}
-	//log.Info("tracer provider", bootstrap.Trace.Endpoint)
 
 	if bootstrap.Sentry != nil {
-		if err := sentry.Init(
-			sentry.ClientOptions{
-				Dsn:              bootstrap.Sentry.Dns,
-				AttachStacktrace: true,
-			},
-		); err != nil {
-			panic(err)
+		if bootstrap.Sentry.Dns != "" {
+			if err := sentry.Init(
+				sentry.ClientOptions{
+					Dsn:              bootstrap.Sentry.Dns,
+					AttachStacktrace: true,
+				},
+			); err != nil {
+				panic(err)
+			}
+			log.Info("sentry", bootstrap.Sentry.Dns)
 		}
-		log.Info("sentry", bootstrap.Sentry.Dns)
 	}
 
 	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Data, logger)
