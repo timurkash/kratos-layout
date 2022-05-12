@@ -27,10 +27,6 @@ var (
 	id, _ = os.Hostname()
 )
 
-func init() {
-	flag.StringVar(&flagConf, "conf", "./configs", "config path, eg: -conf config.yaml")
-}
-
 func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
@@ -46,6 +42,7 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 }
 
 func main() {
+	flag.StringVar(&flagConf, "conf", "./configs", "config path, eg: -conf config.yaml")
 	flag.Parse()
 	logger := log.With(log.NewStdLogger(os.Stdout),
 		"ts", log.DefaultTimestamp,
@@ -61,12 +58,6 @@ func main() {
 			file.NewSource(flagConf),
 		),
 	)
-	defer func() {
-		err := c.Close()
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
 
 	if err := c.Load(); err != nil {
 		panic(err)
@@ -75,6 +66,9 @@ func main() {
 	var bootstrap conf.Bootstrap
 	if err := c.Scan(&bootstrap); err != nil {
 		panic(err)
+	}
+	if err := c.Close(); err != nil {
+		log.Fatal(err)
 	}
 
 	//if bootstrap.Trace != nil {
