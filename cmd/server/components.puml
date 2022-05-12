@@ -1,0 +1,44 @@
+@startuml
+
+package main.go {
+    [Conf] as conf
+    [Logger] as logger
+    [Data] as data
+    [Repo] as repo
+    [UseCase] as uc
+    [Service] as service
+    frame Server {
+        [GrpcServer] as grpc
+        [HttpServer] as http
+    }
+    [App] as app
+    [Jaeger] as trace
+    [Sentry] as log
+}
+
+database Postgres
+data --> Postgres
+
+logger <-- data
+logger <-- repo
+logger <-- uc
+logger <-- service
+logger <-- grpc
+logger <-- http
+logger <-- app
+
+conf <-- data
+conf <-- grpc
+conf <-- http
+conf <-- trace
+conf <-- log
+
+data <-- repo
+repo <-- uc
+uc <-- service
+service <-- grpc
+service <-- http
+grpc <-- app
+http <-- app
+
+@enduml
