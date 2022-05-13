@@ -2,8 +2,6 @@ package main
 
 import (
 	"flag"
-	"github.com/getsentry/sentry-go"
-	"github.com/go-kratos/kratos/v2/transport/http"
 	"os"
 
 	"github.com/go-kratos/kratos-layout/internal/conf"
@@ -13,13 +11,14 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
+	"github.com/go-kratos/kratos/v2/transport/http"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"
 var (
-	// Name is the name of the compiled software.
+	// Name is the name of the service
 	Name string
-	// Version is the version of the compiled software.
+	// Version is the version of the service
 	Version string
 	// flagConf is the config flag.
 	flagConf string
@@ -53,46 +52,36 @@ func main() {
 		"trace_id", tracing.TraceID(),
 		"span_id", tracing.SpanID(),
 	)
+
 	c := config.New(
 		config.WithSource(
 			file.NewSource(flagConf),
 		),
 	)
-
 	if err := c.Load(); err != nil {
 		panic(err)
 	}
-
 	var bootstrap conf.Bootstrap
 	if err := c.Scan(&bootstrap); err != nil {
 		panic(err)
 	}
 	if err := c.Close(); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
-	//if bootstrap.Trace != nil {
-	//	if bootstrap.Trace.Endpoint != "" {
-	//		if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
-	//			panic(err)
-	//		}
-	//		log.Info("tracer provider", bootstrap.Trace.Endpoint)
+	//if bootstrap.Trace != nil && bootstrap.Trace.Endpoint != "" {
+	//	if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
+	//		panic(err)
 	//	}
+	//	log.Info("tracer provider", bootstrap.Trace.Endpoint)
 	//}
 
-	if bootstrap.Sentry != nil {
-		if bootstrap.Sentry.Dns != "" {
-			if err := sentry.Init(
-				sentry.ClientOptions{
-					Dsn:              bootstrap.Sentry.Dns,
-					AttachStacktrace: true,
-				},
-			); err != nil {
-				panic(err)
-			}
-			log.Info("sentry", bootstrap.Sentry.Dns)
-		}
-	}
+	//if bootstrap.Sentry != nil && bootstrap.Sentry.Dns != "" {
+	//	if err := sentry.SetSentryDns(bootstrap.Sentry.Dns); err != nil {
+	//		panic(err)
+	//	}
+	//	log.Info("sentry", bootstrap.Sentry.Dns)
+	//}
 
 	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Data, logger)
 	if err != nil {

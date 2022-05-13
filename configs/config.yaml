@@ -15,8 +15,3 @@ data:
     password: kratos-password
     dbname: kratos
     ssl_mode: disable
-  redis:
-    host: localhost
-    port: 6379
-    read_timeout: 0.2s
-    write_timeout: 0.2s
