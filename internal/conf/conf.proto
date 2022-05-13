@@ -32,7 +32,7 @@ message Trace {
 }
 
 message Sentry {
-  string dns = 1;
+  string dsn = 1;
 }
 
 message Data {

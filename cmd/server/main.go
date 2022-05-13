@@ -71,16 +71,16 @@ func main() {
 
 	//if bootstrap.Trace != nil && bootstrap.Trace.Endpoint != "" {
 	//	if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
-	//		panic(err)
+	//		log.Error(err)
 	//	}
 	//	log.Info("tracer provider", bootstrap.Trace.Endpoint)
 	//}
 
-	//if bootstrap.Sentry != nil && bootstrap.Sentry.Dns != "" {
-	//	if err := sentry.SetSentryDns(bootstrap.Sentry.Dns); err != nil {
-	//		panic(err)
+	//if bootstrap.Sentry != nil && bootstrap.Sentry.Dsn != "" {
+	//	if err := sentry.SetSentryDns(bootstrap.Sentry.Dsn); err != nil {
+	//		log.Error(err)
 	//	}
-	//	log.Info("sentry", bootstrap.Sentry.Dns)
+	//	log.Info("sentry", bootstrap.Sentry.Dsn)
 	//}
 
 	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Data, logger)
