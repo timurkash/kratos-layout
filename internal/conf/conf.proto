@@ -44,12 +44,5 @@ message Data {
     string dbname = 5;
     string ssl_mode = 6;
   }
-  message Redis {
-    string host = 1;
-    int32 port = 2;
-    google.protobuf.Duration read_timeout = 3;
-    google.protobuf.Duration write_timeout = 4;
-  }
   Relational relational = 1;
-  Redis redis = 2;
 }
