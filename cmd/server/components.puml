@@ -1,10 +1,11 @@
 @startuml
 
 package main.go {
-    [Conf] as conf
-    [Logger] as logger
-    [Data] as data
-    [Repo] as repo
+    [Conf] as conf #lightgray
+    [Logger] as logger #lightgray
+    component Repo as repo {
+        [Data] as data
+    }
     [UseCase] as uc
     [Service] as service
     rectangle Server as server {
@@ -12,34 +13,33 @@ package main.go {
         [HttpServer] as http
     }
     [App] as app
-    [Jaeger] as trace
-    [Sentry] as log
-    note "Stabs\n generated\n by proto" as stabs
+    [Jaeger] as trace #ddd
+    [Sentry] as log #ddd
+    note "Stabs generated\n from proto" as stabs_note
+    note "For metrics" as http_note
 }
+[Jaeger]
+[Sentry]
 
 database Postgres
-data --> Postgres
-
-logger <-- data
-logger <-- repo
-logger <-- uc
-logger <-- service
-logger <-- grpc
-logger <-- http
-logger <-- app
+data -d-> Postgres
+trace ..> Jaeger
+log ..> Sentry
 
 conf <-- data
 conf <-- server
 conf <-- trace
 conf <-- log
 
-data <-- repo
+data -[hidden]- repo
 repo <-- uc
 uc <-- service
 service <-- grpc
-service - stabs
 service <-- http
 grpc <-- app
 http <-- app
+
+service - stabs_note
+http -- http_note
 
 @enduml
