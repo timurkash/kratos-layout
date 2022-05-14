@@ -1,6 +1,6 @@
 @startuml
 
-package main.go {
+package Service {
     [Conf] as conf #lightgray
     [Logger] as logger #lightgray
     component Repo as repo {
