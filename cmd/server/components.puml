@@ -1,14 +1,16 @@
 @startuml
 
-package Service {
+package main.go {
     [Conf] as conf #lightgray
     [Logger] as logger #lightgray
     component Repo as repo {
         [Data] as data
     }
-    [UseCase] as uc
+    component [UseCase] as uc {
+        interface Repo
+    }
     [Service] as service
-    rectangle Server as server {
+    component Server as server {
         [GrpcServer] as grpc
         [HttpServer] as http
     }
