@@ -3,14 +3,14 @@ package service
 import (
 	"context"
 
-	v1 "github.com/go-kratos/kratos-layout/api/helloworld/v1"
+	pb "github.com/go-kratos/kratos-layout/api/helloworld/v1"
 	"github.com/go-kratos/kratos-layout/internal/biz"
 	"github.com/go-kratos/kratos/v2/log"
 )
 
 // GreeterService is a greeter service.
 type GreeterService struct {
-	v1.UnimplementedGreeterServer
+	pb.UnimplementedGreeterServer
 
 	uc  *biz.GreeterUsecase
 	log *log.Helper
@@ -22,11 +22,11 @@ func NewGreeterService(uc *biz.GreeterUsecase, logger log.Logger) *GreeterServic
 }
 
 // SayHello implements helloworld.GreeterServer
-func (s *GreeterService) SayHello(ctx context.Context, in *v1.HelloRequest) (*v1.HelloReply, error) {
+func (s *GreeterService) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	s.log.WithContext(ctx).Infof("SayHello Received: %v", in.GetName())
 
 	if in.GetName() == "error" {
-		return nil, v1.ErrorUserNotFound("user not found: %s", in.GetName())
+		return nil, pb.ErrorUserNotFound("user not found: %s", in.GetName())
 	}
-	return &v1.HelloReply{Message: "Hello " + in.GetName()}, nil
+	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
 }

@@ -3,7 +3,6 @@ module github.com/go-kratos/kratos-layout
 go 1.17
 
 require (
-	github.com/getsentry/sentry-go v0.13.0
 	github.com/go-kratos/kratos/v2 v2.2.1
 	github.com/go-kratos/sentry v0.0.0-20211021071616-de3a2011c4e4
 	github.com/google/wire v0.5.0
@@ -17,6 +16,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
+	github.com/getsentry/sentry-go v0.13.0 // indirect
 	github.com/go-logr/logr v1.2.1 // indirect
 	github.com/go-logr/stdr v1.2.0 // indirect
 	github.com/go-playground/form/v4 v4.2.0 // indirect
