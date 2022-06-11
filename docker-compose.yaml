@@ -12,6 +12,8 @@ services:
     ports:
       - "9000:9000"
       - "8000:8000"
+    networks:
+      - kratos
 
   postgres:
     image: postgres
@@ -23,6 +25,11 @@ services:
       - kratos:/var/lib/postgresql/data
 #    ports:
 #      - "5432:5432"
+    networks:
+      - kratos
 
 volumes:
+  kratos:
+
+networks:
   kratos:
