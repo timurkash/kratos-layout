@@ -6,13 +6,13 @@ server:
     addr: :8000
     timeout: 1s
 #trace:
-#  endpoint: http://localhost:14268/api/traces
+#  endpoint: http://jaeger:14268/api/traces
 #sentry:
-#  dsn: http://localhost:8999
+#  dsn: http://sentry:8999
 data:
   relational:
     dialect: postgres
-    host: localhost
+    host: postgres
     port: 5432
     user: kratos
     password: kratos-password
