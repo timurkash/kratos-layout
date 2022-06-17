@@ -10,6 +10,7 @@ message Bootstrap {
   Trace trace = 2;
   Sentry sentry = 3;
   Data data = 4;
+  Business business = 5;
 }
 
 message Server {
@@ -46,4 +47,8 @@ message Data {
     string ssl_mode = 7;
   }
   Relational relational = 1;
+}
+
+message Business {
+
 }
