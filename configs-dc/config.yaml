@@ -18,3 +18,4 @@ data:
     password: kratos-password
     dbname: kratos
     ssl_mode: disable
+business:
