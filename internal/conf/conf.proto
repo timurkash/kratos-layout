@@ -1,7 +1,7 @@
 syntax = "proto3";
 package kratos.api;
 
-option go_package = "github.com/go-kratos/kratos-layout/internal/conf;conf";
+option go_package = "github.com/timurkash/kratos-layout/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
 
@@ -10,7 +10,8 @@ message Bootstrap {
   Trace trace = 2;
   Sentry sentry = 3;
   Data data = 4;
-  Business business = 5;
+  Jwks jwks = 5;
+  Business business = 6;
 }
 
 message Server {
@@ -44,9 +45,17 @@ message Data {
     string user = 4;
     string password = 5;
     string dbname = 6;
-    string ssl_mode = 7;
+    string schema = 7;
+    string ssl_mode = 8;
   }
   Relational relational = 1;
+}
+
+message Jwks {
+  string url = 1;
+  google.protobuf.Duration refresh_interval = 2;
+  google.protobuf.Duration refresh_rate_limit = 3;
+  google.protobuf.Duration refresh_timeout = 4;
 }
 
 message Business {

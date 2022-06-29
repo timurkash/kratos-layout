@@ -18,4 +18,9 @@ data:
     password: kratos-password
     dbname: kratos
     ssl_mode: disable
+jwks:
+  url: http://keycloak:8080/auth/realms/kratos/protocol/openid-connect/certs
+  refresh_interval: 3600s
+  refresh_rate_limit: 300s
+  refresh_timeout: 10s
 business:
