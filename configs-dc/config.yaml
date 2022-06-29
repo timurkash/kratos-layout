@@ -17,6 +17,7 @@ data:
     user: kratos
     password: kratos-password
     dbname: kratos
+    schema: kratos
     ssl_mode: disable
 jwks:
   url: http://keycloak:8080/auth/realms/kratos/protocol/openid-connect/certs
