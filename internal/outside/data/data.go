@@ -44,6 +44,17 @@ func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
+	if confData.Relational.Schema != "" && confData.Relational.Schema != "public" {
+		if _, err := driver.DB().Exec(
+			fmt.Sprintf(
+				"create schema if not exists %s;set search_path to %s;",
+				confData.Relational.Schema,
+				confData.Relational.Schema,
+			),
+		); err != nil {
+			return nil, nil, err
+		}
+	}
 	//sqlDriver := dialect.DebugWithContext(driver, func(ctx context.Context, i ...interface{}) {
 	//	logHelper.WithContext(ctx).Info(i...)
 	//	_, span := otel.Tracer("entgo.io").Start(ctx,
@@ -55,15 +66,6 @@ func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 	//	)
 	//	span.End()
 	//})
-	if _, err := driver.DB().Exec(
-		fmt.Sprintf(
-			"create schema if not exists %s;set search_path to %s;",
-			confData.Relational.Schema,
-			confData.Relational.Schema,
-		),
-	); err != nil {
-		return nil, nil, err
-	}
 	//client := ent.NewClient(ent.Driver(sqlDriver))
 	//if err := client.Schema.Create(
 	//	context.Background(),
