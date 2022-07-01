@@ -2,7 +2,9 @@ package biz
 
 import (
 	"context"
+	"github.com/timurkash/kratos-layout/internal/conf"
 
+	"github.com/MicahParks/keyfunc"
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -17,11 +19,29 @@ type GreeterRepo interface {
 
 type GreeterUsecase struct {
 	repo GreeterRepo
+	jwks *keyfunc.JWKS
 	log  *log.Helper
 }
 
-func NewGreeterUsecase(repo GreeterRepo, logger log.Logger) *GreeterUsecase {
-	return &GreeterUsecase{repo: repo, log: log.NewHelper(logger)}
+func NewGreeterUsecase(repo GreeterRepo, confJwks *conf.Jwks, logger log.Logger) (*GreeterUsecase, error) {
+	logHelper := log.NewHelper(logger)
+	jwks, err := keyfunc.Get(confJwks.Url, keyfunc.Options{
+		RefreshErrorHandler: func(err error) {
+			log.Errorf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
+		},
+		RefreshInterval:   confJwks.RefreshInterval.AsDuration(),
+		RefreshRateLimit:  confJwks.RefreshRateLimit.AsDuration(),
+		RefreshTimeout:    confJwks.RefreshTimeout.AsDuration(),
+		RefreshUnknownKID: true,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &GreeterUsecase{
+		repo: repo,
+		jwks: jwks,
+		log:  logHelper,
+	}, nil
 }
 
 func (uc *GreeterUsecase) Create(ctx context.Context, g *Greeter) error {

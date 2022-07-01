@@ -44,6 +44,9 @@ func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
+	//if err := cent.SetSchema(driver, confData.Relational.Schema); err != nil {
+	//	return nil, nil, err
+	//}
 	if confData.Relational.Schema != "" && confData.Relational.Schema != "public" {
 		if _, err := driver.DB().Exec(
 			fmt.Sprintf(
@@ -55,6 +58,9 @@ func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 			return nil, nil, err
 		}
 	}
+
+	//client := ent.NewClient(ent.Driver(cent.DebugWithContext(driver, logHelper)))
+
 	//sqlDriver := dialect.DebugWithContext(driver, func(ctx context.Context, i ...interface{}) {
 	//	logHelper.WithContext(ctx).Info(i...)
 	//	_, span := otel.Tracer("entgo.io").Start(ctx,

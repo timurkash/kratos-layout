@@ -84,7 +84,12 @@ func main() {
 	//	log.Info("sentry", bootstrap.Sentry.Dsn)
 	//}
 
-	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Data, bootstrap.Business, logger)
+	app, cleanup, err := initApp(
+		bootstrap.Server,
+		bootstrap.Data,
+		bootstrap.Jwks,
+		bootstrap.Business,
+		logger)
 	if err != nil {
 		panic(err)
 	}
