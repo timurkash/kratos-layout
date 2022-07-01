@@ -27,7 +27,7 @@ func NewGreeterUsecase(repo GreeterRepo, confJwks *conf.Jwks, logger log.Logger)
 	logHelper := log.NewHelper(logger)
 	jwks, err := keyfunc.Get(confJwks.Url, keyfunc.Options{
 		RefreshErrorHandler: func(err error) {
-			log.Errorf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
+			logHelper.Errorf("There was an error with the jwt.Keyfunc\nError: %s", err.Error())
 		},
 		RefreshInterval:   confJwks.RefreshInterval.AsDuration(),
 		RefreshRateLimit:  confJwks.RefreshRateLimit.AsDuration(),
