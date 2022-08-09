@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres
+    volumes:
+      - ~/pg/kratos/postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: kratos
+      POSTGRES_PASSWORD: kratos-password
+      POSTGRES_DB: kratos
+      POSTGRES_SCHEMA: kratos
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+networks:
+  backend:

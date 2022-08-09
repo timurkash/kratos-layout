@@ -19,9 +19,9 @@ data:
     dbname: kratos
     schema: kratos
     ssl_mode: disable
-jwks:
-  url: http://localhost:8080/auth/realms/kratos/protocol/openid-connect/certs
-  refresh_interval: 3600s
-  refresh_rate_limit: 300s
-  refresh_timeout: 10s
+#jwks:
+#  url: http://localhost:8080/auth/realms/kratos/protocol/openid-connect/certs
+#  refresh_interval: 3600s
+#  refresh_rate_limit: 300s
+#  refresh_timeout: 10s
 business:
