@@ -38,10 +38,17 @@ api:
  	       --go-grpc_out=paths=source_relative:. \
 	       $(API_PROTO_FILES)
 
+.PHONY: dc
+dc:
+	@docker-compose up -d
+
 .PHONY: build
-# build
 build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
+
+.PHONY: run
+run: dc build
+	./bin/server
 
 .PHONY: wire
 wire:
