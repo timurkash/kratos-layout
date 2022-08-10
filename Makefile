@@ -48,7 +48,7 @@ build:
 
 .PHONY: run
 run: dc build
-	./bin/server
+	./bin/$(shell ls bin)
 
 .PHONY: wire
 wire:
