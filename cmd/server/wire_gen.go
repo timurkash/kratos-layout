@@ -25,13 +25,17 @@ func initApp(confServer *conf.Server, confData *conf.Data, jwks *conf.Jwks, busi
 		return nil, nil, err
 	}
 	greeterRepo := data.NewGreeterRepo(dataData, logger)
-	greeterUsecase, err := biz.NewGreeterUsecase(greeterRepo, jwks, logger)
+	greeterUsecase, err := biz.NewGreeterUsecase(greeterRepo, logger)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
 	greeterService := service.NewGreeterService(greeterUsecase, logger)
-	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)
+	grpcServer, err := server.NewGRPCServer(confServer, jwks, greeterService, logger)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
 	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
