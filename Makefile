@@ -21,6 +21,9 @@ errors:
                --go-errors_out=paths=source_relative:. \
                $(API_PROTO_FILES)
 
+tidy:
+	@go mod tidy -compat=1.17
+
 .PHONY: config
 # generate internal proto
 config:

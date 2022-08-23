@@ -4,7 +4,6 @@ go 1.17
 
 require (
 	entgo.io/ent v0.10.1
-	github.com/MicahParks/keyfunc v1.1.0
 	github.com/go-kratos/kratos/v2 v2.2.1
 	github.com/go-kratos/sentry v0.0.0-20211021071616-de3a2011c4e4
 	github.com/google/wire v0.5.0
@@ -23,7 +22,6 @@ require (
 	github.com/go-logr/logr v1.2.1 // indirect
 	github.com/go-logr/stdr v1.2.0 // indirect
 	github.com/go-playground/form/v4 v4.2.0 // indirect
-	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
