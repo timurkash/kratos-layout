@@ -9,6 +9,7 @@ import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
+
 	"github.com/timurkash/kratos-layout/internal/biz"
 	"github.com/timurkash/kratos-layout/internal/conf"
 	"github.com/timurkash/kratos-layout/internal/outside/data"

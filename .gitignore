@@ -11,7 +11,7 @@ out
 ### Glid, Depe template
 glide.yaml
 glide.lock
-#vendor/*
+vendor
 #go.mod
 #go.sum
 

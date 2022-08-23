@@ -2,13 +2,15 @@ package service
 
 import (
 	"context"
+	"os"
+	"testing"
+
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
+
 	"github.com/timurkash/kratos-layout/internal/biz"
 	"github.com/timurkash/kratos-layout/internal/outside/data"
 	"github.com/timurkash/kratos-layout/internal/test"
-	"os"
-	"testing"
 )
 
 func getTestService() (*GreeterService, context.Context, error) {
@@ -24,7 +26,7 @@ func getTestService() (*GreeterService, context.Context, error) {
 		return nil, nil, err
 	}
 	greeterRepo := data.NewGreeterRepo(dataData, logger)
-	greeterUsecase, _ := biz.NewGreeterUsecase(greeterRepo, nil, logger)
+	greeterUsecase, _ := biz.NewGreeterUsecase(greeterRepo, logger)
 	return NewGreeterService(greeterUsecase, logger), context.TODO(), nil
 }
 

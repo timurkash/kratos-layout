@@ -8,6 +8,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/sentry"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+
 	pb "github.com/timurkash/kratos-layout/api/helloworld/v1"
 	"github.com/timurkash/kratos-layout/internal/conf"
 	"github.com/timurkash/kratos-layout/internal/service"
