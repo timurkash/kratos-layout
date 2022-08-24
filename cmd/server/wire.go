@@ -20,8 +20,8 @@ import (
 // initApp init kratos application.
 func initApp(
 	*conf.Server,
-	*conf.Data,
 	*conf.Jwks,
+	*conf.Data,
 	*conf.Business,
 	log.Logger,
 ) (*kratos.App, func(), error) {

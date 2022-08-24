@@ -88,8 +88,8 @@ func main() {
 
 	app, cleanup, err := initApp(
 		bootstrap.Server,
-		bootstrap.Data,
 		bootstrap.Jwks,
+		bootstrap.Data,
 		bootstrap.Business,
 		logger)
 	if err != nil {
