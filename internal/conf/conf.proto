@@ -29,6 +29,13 @@ message Server {
   HTTP http = 2;
 }
 
+message Jwks {
+  string url = 1;
+  google.protobuf.Duration refresh_interval = 2;
+  google.protobuf.Duration refresh_rate_limit = 3;
+  google.protobuf.Duration refresh_timeout = 4;
+}
+
 message Trace {
   string endpoint = 1;
 }
@@ -49,13 +56,6 @@ message Data {
     string ssl_mode = 8;
   }
   Relational relational = 1;
-}
-
-message Jwks {
-  string url = 1;
-  google.protobuf.Duration refresh_interval = 2;
-  google.protobuf.Duration refresh_rate_limit = 3;
-  google.protobuf.Duration refresh_timeout = 4;
 }
 
 message Business {
