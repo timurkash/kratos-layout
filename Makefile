@@ -15,11 +15,12 @@ init:
 .PHONY: errors
 # generate errors code
 errors:
-	protoc --proto_path=. \
-		       --proto_path=$(KRATOS_THIRD_PARTY_DIR) \
-               --go_out=paths=source_relative:. \
-               --go-errors_out=paths=source_relative:. \
-               $(API_PROTO_FILES)
+	@protoc \
+		-I=. \
+		--proto_path=$(KRATOS_THIRD_PARTY_DIR) \
+		--go_out=paths=source_relative:. \
+		--go-errors_out=paths=source_relative:. \
+		$(API_PROTO_FILES)
 
 tidy:
 	@go mod tidy -compat=1.17
@@ -27,26 +28,28 @@ tidy:
 .PHONY: config
 # generate internal proto
 config:
-	protoc --proto_path=. \
-	       --proto_path=$(KRATOS_THIRD_PARTY_DIR) \
- 	       --go_out=paths=source_relative:. \
-	       $(INTERNAL_PROTO_FILES)
+	@protoc \
+		-I=. \
+		-I=$(KRATOS_THIRD_PARTY_DIR) \
+		--go_out=paths=source_relative:. \
+		$(INTERNAL_PROTO_FILES)
 
 .PHONY: api
 # generate api proto
 api:
-	protoc --proto_path=. \
-	       --proto_path=$(KRATOS_THIRD_PARTY_DIR) \
- 	       --go_out=paths=source_relative:. \
- 	       --go-grpc_out=paths=source_relative:. \
-	       $(API_PROTO_FILES)
+	@protoc \
+		-I=. \
+		-I=$(KRATOS_THIRD_PARTY_DIR) \
+ 		--go_out=paths=source_relative:. \
+ 		--go-grpc_out=paths=source_relative:. \
+		$(API_PROTO_FILES)
 
 .PHONY: dc
 dc:
 	@docker-compose up -d
 
 .PHONY: build
-build:
+build: config wire
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
 .PHONY: run
@@ -64,11 +67,7 @@ generate:
 
 .PHONY: all
 # generate all
-all:
-	make api;
-	make errors;
-	make config;
-	make generate;
+all: api errors config generate
 
 # show help
 help:
