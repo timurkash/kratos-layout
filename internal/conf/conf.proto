@@ -7,10 +7,10 @@ import "google/protobuf/duration.proto";
 
 message Bootstrap {
   Server server = 1;
-  Trace trace = 2;
-  Sentry sentry = 3;
-  Data data = 4;
-  Jwks jwks = 5;
+  Jwks jwks = 2;
+  Trace trace = 3;
+  Sentry sentry = 4;
+  Data data = 5;
   Business business = 6;
 }
 
