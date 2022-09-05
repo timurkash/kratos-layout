@@ -15,7 +15,7 @@ import (
 )
 
 // NewHTTPServer new HTTP server.
-func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *http.Server {
+func NewHTTPServer(confServer *conf.Server, greeter *service.GreeterService, logger log.Logger) (*http.Server, error) {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -24,17 +24,17 @@ func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.L
 			logging.Server(logger),
 		),
 	}
-	if c.Http.Network != "" {
-		opts = append(opts, http.Network(c.Http.Network))
+	if confServer.Http.Network != "" {
+		opts = append(opts, http.Network(confServer.Http.Network))
 	}
-	if c.Http.Addr != "" {
-		opts = append(opts, http.Address(c.Http.Addr))
+	if confServer.Http.Addr != "" {
+		opts = append(opts, http.Address(confServer.Http.Addr))
 	}
-	if c.Http.Timeout != nil {
-		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
+	if confServer.Http.Timeout != nil {
+		opts = append(opts, http.Timeout(confServer.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
 	srv.Handle("/metrics", promhttp.Handler())
 	pb.RegisterGreeterHTTPServer(srv, greeter)
-	return srv
+	return srv, nil
 }

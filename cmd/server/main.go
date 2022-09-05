@@ -55,36 +55,22 @@ func main() {
 		"span_id", tracing.SpanID(),
 	)
 
-	c := config.New(
+	theConfig := config.New(
 		config.WithSource(
 			file.NewSource(flagConf),
 			env.NewSource(""),
 		),
 	)
-	if err := c.Load(); err != nil {
+	if err := theConfig.Load(); err != nil {
 		panic(err)
 	}
 	var bootstrap conf.Bootstrap
-	if err := c.Scan(&bootstrap); err != nil {
+	if err := theConfig.Scan(&bootstrap); err != nil {
 		panic(err)
 	}
-	if err := c.Close(); err != nil {
+	if err := theConfig.Close(); err != nil {
 		panic(err)
 	}
-
-	//if bootstrap.Trace != nil && bootstrap.Trace.Endpoint != "" {
-	//	if err := jaeger.SetTracerProvider(bootstrap.Trace.Endpoint, Name); err != nil {
-	//		log.Error(err)
-	//	}
-	//	log.Info("tracer provider", bootstrap.Trace.Endpoint)
-	//}
-
-	//if bootstrap.Sentry != nil && bootstrap.Sentry.Dsn != "" {
-	//	if err := sentry.SetSentryDns(bootstrap.Sentry.Dsn); err != nil {
-	//		log.Error(err)
-	//	}
-	//	log.Info("sentry", bootstrap.Sentry.Dsn)
-	//}
 
 	app, cleanup, err := initApp(
 		bootstrap.Server,

@@ -32,7 +32,11 @@ func initApp(confServer *conf.Server, jwks *conf.Jwks, confData *conf.Data, busi
 		cleanup()
 		return nil, nil, err
 	}
-	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
+	httpServer, err := server.NewHTTPServer(confServer, greeterService, logger)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
 		cleanup()
