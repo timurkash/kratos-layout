@@ -17,14 +17,16 @@ type GreeterRepo interface {
 }
 
 type GreeterUsecase struct {
-	repo GreeterRepo
-	log  *log.Helper
+	confBusiness *conf.Business
+	repo         GreeterRepo
+	log          *log.Helper
 }
 
 func NewGreeterUsecase(confBusiness *conf.Business, repo GreeterRepo, logger log.Logger) *GreeterUsecase {
 	return &GreeterUsecase{
-		repo: repo,
-		log:  log.NewHelper(logger),
+		confBusiness: confBusiness,
+		repo:         repo,
+		log:          log.NewHelper(logger),
 	}
 }
 
