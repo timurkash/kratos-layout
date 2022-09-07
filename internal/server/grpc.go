@@ -24,7 +24,7 @@ type Jwks struct {
 	RefreshTimeout   time.Duration
 }
 
-func authMiddleware(jwks *Jwks) middleware.Middleware {
+func authMiddleware(confJwks *Jwks) middleware.Middleware {
 	return func(handler middleware.Handler) middleware.Handler {
 		return func(ctx context.Context, req interface{}) (reply interface{}, err error) {
 			return
