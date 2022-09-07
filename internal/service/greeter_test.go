@@ -26,7 +26,7 @@ func getTestService() (*GreeterService, context.Context, error) {
 		return nil, nil, err
 	}
 	greeterRepo := data.NewGreeterRepo(dataData, logger)
-	greeterUsecase, _ := biz.NewGreeterUsecase(greeterRepo, logger)
+	greeterUsecase := biz.NewGreeterUsecase(nil, greeterRepo, logger)
 	return NewGreeterService(greeterUsecase, logger), context.TODO(), nil
 }
 
