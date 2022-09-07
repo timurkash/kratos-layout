@@ -21,8 +21,8 @@ import (
 func initApp(
 	*conf.Server,
 	*conf.Jwks,
-	*conf.Data,
 	*conf.Business,
+	*conf.Data,
 	log.Logger,
 ) (*kratos.App, func(), error) {
 	panic(

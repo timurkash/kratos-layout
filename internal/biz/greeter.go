@@ -3,6 +3,8 @@ package biz
 import (
 	"context"
 
+	"github.com/timurkash/kratos-layout/internal/conf"
+
 	"github.com/go-kratos/kratos/v2/log"
 )
 
@@ -20,7 +22,7 @@ type GreeterUsecase struct {
 	log  *log.Helper
 }
 
-func NewGreeterUsecase(repo GreeterRepo, logger log.Logger) (*GreeterUsecase, error) {
+func NewGreeterUsecase(confBusiness *conf.Business, repo GreeterRepo, logger log.Logger) (*GreeterUsecase, error) {
 	return &GreeterUsecase{
 		repo: repo,
 		log:  log.NewHelper(logger),
