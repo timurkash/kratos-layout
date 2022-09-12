@@ -22,6 +22,7 @@ var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
 // Data .
 type Data struct {
 	//relational *ent.Client
+	log *log.Helper
 }
 
 // NewData .
@@ -83,6 +84,7 @@ func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 	//}
 	data := &Data{
 		//relational: client,
+		log: logHelper,
 	}
 	cleanup := func() {
 		logHelper.Info("closing the data resources")

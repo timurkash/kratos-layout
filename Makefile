@@ -50,7 +50,7 @@ dc:
 
 .PHONY: build
 build: config wire
-	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
+	@mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
 .PHONY: run
 run: dc build
