@@ -45,20 +45,21 @@ func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
+	driver = driver // TODO
 	//if err := cent.SetSchema(driver, confData.Relational.Schema); err != nil {
 	//	return nil, nil, err
 	//}
-	if confData.Relational.Schema != "" && confData.Relational.Schema != "public" {
-		if _, err := driver.DB().Exec(
-			fmt.Sprintf(
-				"create schema if not exists %s;set search_path to %s;",
-				confData.Relational.Schema,
-				confData.Relational.Schema,
-			),
-		); err != nil {
-			return nil, nil, err
-		}
-	}
+	//if confData.Relational.Schema != "" && confData.Relational.Schema != "public" {
+	//	if _, err := driver.DB().Exec(
+	//		fmt.Sprintf(
+	//			"create schema if not exists %s;set search_path to %s;",
+	//			confData.Relational.Schema,
+	//			confData.Relational.Schema,
+	//		),
+	//	); err != nil {
+	//		return nil, nil, err
+	//	}
+	//}
 
 	//client := ent.NewClient(ent.Driver(cent.DebugWithContext(driver, logHelper)))
 
