@@ -69,6 +69,10 @@ generate:
 # generate all
 all: api errors config generate
 
+.PHONY: lint
+lint:
+	@golangci-lint run
+
 # show help
 help:
 	@echo ''

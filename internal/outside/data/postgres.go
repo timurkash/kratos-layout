@@ -12,7 +12,7 @@ type greeterRepo struct {
 	log  *log.Helper
 }
 
-// NewGreeterRepo .
+// NewGreeterRepo is constructor for greeterRepo
 func NewGreeterRepo(data *Data, logger log.Logger) biz.GreeterRepo {
 	return &greeterRepo{
 		data: data,

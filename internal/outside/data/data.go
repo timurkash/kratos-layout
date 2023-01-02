@@ -19,13 +19,13 @@ import (
 // ProviderSet is data providers.
 var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
 
-// Data .
+// Data is struct for Data component
 type Data struct {
 	//relational *ent.Client
 	log *log.Helper
 }
 
-// NewData .
+// NewData is constructor for Data component
 func NewData(confData *conf.Data, logger log.Logger) (*Data, func(), error) {
 	logHelper := log.NewHelper(logger)
 	if confData.Relational.Dialect != dialect.Postgres {
