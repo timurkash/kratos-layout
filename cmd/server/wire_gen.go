@@ -11,7 +11,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/timurkash/kratos-layout/internal/biz"
 	"github.com/timurkash/kratos-layout/internal/conf"
-	"github.com/timurkash/kratos-layout/internal/outside/data"
+	"github.com/timurkash/kratos-layout/internal/data"
 	"github.com/timurkash/kratos-layout/internal/server"
 	"github.com/timurkash/kratos-layout/internal/service"
 )

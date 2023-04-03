@@ -9,7 +9,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 
 	"github.com/timurkash/kratos-layout/internal/biz"
-	"github.com/timurkash/kratos-layout/internal/outside/data"
+	"github.com/timurkash/kratos-layout/internal/data"
 	"github.com/timurkash/kratos-layout/internal/test"
 )
 
