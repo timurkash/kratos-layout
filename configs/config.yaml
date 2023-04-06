@@ -5,10 +5,12 @@ server:
   http:
     addr: :8000
     timeout: 1s
-#trace:
-#  endpoint: http://localhost:14268/api/traces
-#sentry:
-#  dsn: http://localhost:8999
+#jwks:
+#  url: http://localhost:8080/auth/realms/kratos/protocol/openid-connect/certs
+#  refresh_interval: 3600s
+#  refresh_rate_limit: 300s
+#  refresh_timeout: 10s
+business:
 data:
   relational:
     dialect: postgres
@@ -19,9 +21,7 @@ data:
     dbname: kratos
     schema: kratos
     ssl_mode: disable
-#jwks:
-#  url: http://localhost:8080/auth/realms/kratos/protocol/openid-connect/certs
-#  refresh_interval: 3600s
-#  refresh_rate_limit: 300s
-#  refresh_timeout: 10s
-business:
+#trace:
+#  endpoint: http://localhost:14268/api/traces
+#sentry:
+#  dsn: http://localhost:8999
