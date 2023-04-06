@@ -44,6 +44,10 @@ message Sentry {
   string dsn = 1;
 }
 
+message Business {
+
+}
+
 message Data {
   message Relational {
     string dialect = 1;
@@ -56,8 +60,4 @@ message Data {
     string ssl_mode = 8;
   }
   Relational relational = 1;
-}
-
-message Business {
-
 }
