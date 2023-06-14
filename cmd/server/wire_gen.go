@@ -20,11 +20,14 @@ import (
 
 // initApp init kratos application.
 func initApp(confServer *conf.Server, jwks *conf.Jwks, business *conf.Business, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
-	dataData, cleanup, err := data.NewData(confData, logger)
+	dataData, err := data.NewData(confData, logger)
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data.NewGreeterRepo(dataData, logger)
+	greeterRepo, cleanup, err := data.NewGreeterRepo(confData, dataData)
+	if err != nil {
+		return nil, nil, err
+	}
 	greeterUsecase := biz.NewGreeterUsecase(business, greeterRepo, logger)
 	greeterService := service.NewGreeterService(greeterUsecase, logger)
 	grpcServer, err := server.NewGRPCServer(confServer, jwks, greeterService, logger)
