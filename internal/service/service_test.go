@@ -21,11 +21,14 @@ func getTestService() (*GreeterService, context.Context, error) {
 		"span_id", tracing.SpanID(),
 	)
 	test.IsUnitTest = true
-	dataData, _, err := data.NewData(nil, logger)
+	dataData, err := data.NewData(nil, logger)
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data.NewGreeterRepo(dataData, logger)
+	greeterRepo, _, err := data.NewGreeterRepo(nil, dataData)
+	if err != nil {
+		return nil, nil, err
+	}
 	greeterUsecase := biz.NewGreeterUsecase(nil, greeterRepo, logger)
 	return NewGreeterService(greeterUsecase, logger), context.TODO(), nil
 }
