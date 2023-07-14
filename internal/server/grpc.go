@@ -12,7 +12,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/sentry"
 
-	pb "github.com/timurkash/kratos-layout/api/helloworld/v1"
+	pb "github.com/timurkash/kratos-layout/gen/go/api/helloworld/v1"
 	"github.com/timurkash/kratos-layout/internal/conf"
 	"github.com/timurkash/kratos-layout/internal/service"
 )

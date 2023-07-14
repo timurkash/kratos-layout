@@ -4,6 +4,9 @@ INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
 API_PROTO_FILES=$(shell find api -name *.proto)
 KRATOS_THIRD_PARTY_DIR=$(GOPATH)/src/github.com/go-kratos/kratos/third_party
 
+GEN:=gen
+GEN_GO:=$(GEN)/go
+
 .PHONY: init
 # init env
 init:
@@ -11,16 +14,6 @@ init:
 	go get -u google.golang.org/protobuf/cmd/protoc-gen-go
 	go get -u google.golang.org/grpc/cmd/protoc-gen-go-grpc
 	go get -u github.com/go-kratos/kratos/cmd/protoc-gen-go-errors/v2
-
-.PHONY: errors
-# generate errors code
-errors:
-	@protoc \
-		-I=. \
-		--proto_path=$(KRATOS_THIRD_PARTY_DIR) \
-		--go_out=paths=source_relative:. \
-		--go-errors_out=paths=source_relative:. \
-		$(API_PROTO_FILES)
 
 tidy:
 	@go mod tidy -compat=1.17
@@ -37,11 +30,14 @@ config:
 .PHONY: api
 # generate api proto
 api:
+	@mkdir -p $(GEN_GO)
 	@protoc \
 		-I=. \
 		-I=$(KRATOS_THIRD_PARTY_DIR) \
- 		--go_out=paths=source_relative:. \
- 		--go-grpc_out=paths=source_relative:. \
+ 		--go_out=paths=source_relative:$(GEN_GO) \
+ 		--go-grpc_out=paths=source_relative:$(GEN_GO) \
+ 		--go-http_out=paths=source_relative:$(GEN_GO) \
+ 		--go-errors_out=paths=source_relative:$(GEN_GO) \
 		$(API_PROTO_FILES)
 
 .PHONY: dc
@@ -49,7 +45,7 @@ dc:
 	@docker-compose up -d
 
 .PHONY: build
-build: config wire
+build:
 	@mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
 .PHONY: run
@@ -67,7 +63,7 @@ generate:
 
 .PHONY: all
 # generate all
-all: api errors config generate
+all: api config generate
 
 .PHONY: lint
 lint:

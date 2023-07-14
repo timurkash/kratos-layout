@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 
-	pb "github.com/timurkash/kratos-layout/api/helloworld/v1"
+	pb "github.com/timurkash/kratos-layout/gen/go/api/helloworld/v1"
 	"github.com/timurkash/kratos-layout/internal/biz"
 )
 
