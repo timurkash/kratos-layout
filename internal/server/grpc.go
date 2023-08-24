@@ -9,6 +9,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
+	"github.com/go-kratos/kratos/v2/middleware/validate"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/sentry"
 
@@ -24,7 +25,7 @@ type Jwks struct {
 	RefreshTimeout   time.Duration
 }
 
-func authMiddleware(confJwks *Jwks) middleware.Middleware {
+func authMiddleware(_ *Jwks) middleware.Middleware {
 	return func(handler middleware.Handler) middleware.Handler {
 		return func(ctx context.Context, req interface{}) (reply interface{}, err error) {
 			return
@@ -47,6 +48,7 @@ func NewGRPCServer(confServer *conf.Server, confJwks *conf.Jwks, greeter *servic
 			sentry.Server(),
 			tracing.Server(),
 			logging.Server(logger),
+			validate.Validator(),
 			authMiddleware(jwks),
 		),
 	}
