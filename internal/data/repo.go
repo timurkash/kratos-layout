@@ -48,7 +48,6 @@ func NewGreeterRepo(confData *conf.Data, data *Data) (biz.GreeterRepo, func(), e
 			//	data.log.Error(err)
 			//}
 		}, nil
-
 }
 
 func (r *greeterRepo) CreateGreeter(ctx context.Context, greeter *biz.Greeter) error {
