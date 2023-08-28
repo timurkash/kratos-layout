@@ -11,6 +11,7 @@ import (
 	// init postgres driver
 	_ "github.com/lib/pq"
 
+	"github.com/go-kratos/kratos/v2/log"
 	"github.com/timurkash/kratos-layout/internal/biz"
 	"github.com/timurkash/kratos-layout/internal/conf"
 )
@@ -21,7 +22,7 @@ type greeterRepo struct {
 }
 
 // NewGreeterRepo is constructor for greeterRepo
-func NewGreeterRepo(confData *conf.Data, data *Data) (biz.GreeterRepo, func(), error) {
+func NewGreeterRepo(confData *conf.Data, data *Data, logger log.Logger) (biz.GreeterRepo, func(), error) {
 	if confData.Relational.Dialect != dialect.Postgres {
 		return nil, nil, errors.New("not postgres is not supported")
 	}
