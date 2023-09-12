@@ -72,11 +72,7 @@ func main() {
 		panic(err)
 	}
 
-	app, cleanup, err := initApp(
-		bootstrap.Server,
-		bootstrap.Business,
-		bootstrap.Data,
-		logger)
+	app, cleanup, err := initApp(bootstrap.Server, bootstrap.Business, bootstrap.Data, logger)
 	if err != nil {
 		panic(err)
 	}
