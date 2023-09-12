@@ -20,7 +20,6 @@ import (
 // initApp init kratos application.
 func initApp(
 	*conf.Server,
-	*conf.Jwks,
 	*conf.Business,
 	*conf.Data,
 	log.Logger,

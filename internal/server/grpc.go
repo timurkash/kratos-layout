@@ -1,11 +1,7 @@
 package server
 
 import (
-	"context"
-	"time"
-
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
@@ -18,30 +14,8 @@ import (
 	"github.com/timurkash/kratos-layout/internal/service"
 )
 
-type Jwks struct {
-	Url              string
-	RefreshInterval  time.Duration
-	RefreshRateLimit time.Duration
-	RefreshTimeout   time.Duration
-}
-
-func authMiddleware(_ *Jwks) middleware.Middleware {
-	return func(handler middleware.Handler) middleware.Handler {
-		return func(ctx context.Context, req interface{}) (reply interface{}, err error) {
-			return
-		}
-	}
-}
-
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(confServer *conf.Server, confJwks *conf.Jwks, greeter *service.GreeterService, logger log.Logger) (*grpc.Server, error) {
-	jwks := &Jwks{}
-	if confJwks != nil {
-		jwks.Url = confJwks.Url
-		jwks.RefreshRateLimit = confJwks.RefreshRateLimit.AsDuration()
-		jwks.RefreshInterval = confJwks.RefreshInterval.AsDuration()
-		jwks.RefreshTimeout = confJwks.RefreshTimeout.AsDuration()
-	}
+func NewGRPCServer(confServer *conf.Server, greeter *service.GreeterService, logger log.Logger) (*grpc.Server, error) {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
@@ -49,7 +23,6 @@ func NewGRPCServer(confServer *conf.Server, confJwks *conf.Jwks, greeter *servic
 			tracing.Server(),
 			logging.Server(logger),
 			validate.Validator(),
-			authMiddleware(jwks),
 		),
 	}
 	if confServer.Grpc.Network != "" {

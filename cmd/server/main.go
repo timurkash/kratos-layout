@@ -74,7 +74,6 @@ func main() {
 
 	app, cleanup, err := initApp(
 		bootstrap.Server,
-		bootstrap.Jwks,
 		bootstrap.Business,
 		bootstrap.Data,
 		logger)

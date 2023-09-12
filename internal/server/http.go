@@ -22,8 +22,8 @@ func NewHTTPServer(confServer *conf.Server, greeter *service.GreeterService, log
 			recovery.Recovery(),
 			sentry.Server(),
 			tracing.Server(),
-			validate.Validator(),
 			logging.Server(logger),
+			validate.Validator(),
 		),
 	}
 	if confServer.Http.Network != "" {

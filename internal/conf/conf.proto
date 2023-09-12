@@ -7,34 +7,29 @@ import "google/protobuf/duration.proto";
 
 message Bootstrap {
   Server server = 1;
-  Jwks jwks = 2;
-  Trace trace = 3;
-  Sentry sentry = 4;
-  Data data = 5;
-  Business business = 6;
+  Trace trace = 2;
+  Sentry sentry = 3;
+  Data data = 4;
+  Business business = 5;
 }
 
 message Server {
-  message GRPC {
+  message Server {
     string network = 1;
     string addr = 2;
     google.protobuf.Duration timeout = 3;
   }
-  message HTTP {
-    string network = 1;
-    string addr = 2;
-    google.protobuf.Duration timeout = 3;
+  message Jwks {
+    string url = 1;
+    google.protobuf.Duration refresh_interval = 2;
+    google.protobuf.Duration refresh_rate_limit = 3;
+    google.protobuf.Duration refresh_timeout = 4;
   }
-  GRPC grpc = 1;
-  HTTP http = 2;
+  Server grpc = 1;
+  Server http = 2;
+  Jwks jwks = 3;
 }
 
-message Jwks {
-  string url = 1;
-  google.protobuf.Duration refresh_interval = 2;
-  google.protobuf.Duration refresh_rate_limit = 3;
-  google.protobuf.Duration refresh_timeout = 4;
-}
 
 message Trace {
   string endpoint = 1;
