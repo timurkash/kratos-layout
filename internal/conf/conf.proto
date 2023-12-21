@@ -12,7 +12,22 @@ message Bootstrap {
   Data data = 4;
   Business business = 5;
 }
+message Business {
 
+}
+message Data {
+  message Relational {
+    string dialect = 1;
+    string host = 2;
+    int32 port = 3;
+    string user = 4;
+    string password = 5;
+    string dbname = 6;
+    string schema = 7;
+    string ssl_mode = 8;
+  }
+  Relational relational = 1;
+}
 message Server {
   message Server {
     string network = 1;
@@ -29,30 +44,9 @@ message Server {
   Server http = 2;
   Jwks jwks = 3;
 }
-
-
 message Trace {
   string endpoint = 1;
 }
-
 message Sentry {
   string dsn = 1;
-}
-
-message Business {
-
-}
-
-message Data {
-  message Relational {
-    string dialect = 1;
-    string host = 2;
-    int32 port = 3;
-    string user = 4;
-    string password = 5;
-    string dbname = 6;
-    string schema = 7;
-    string ssl_mode = 8;
-  }
-  Relational relational = 1;
 }
