@@ -20,7 +20,7 @@ import (
 var ProviderSet = wire.NewSet(NewGRPCServer, NewHTTPServer)
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(confServer *conf.Server, greeter *service.GreeterService, logger log.Logger) (*grpc.Server, error) {
+func NewGRPCServer(confServer *conf.Server, service *service.GreeterService, logger log.Logger) (*grpc.Server, error) {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
@@ -40,12 +40,12 @@ func NewGRPCServer(confServer *conf.Server, greeter *service.GreeterService, log
 		opts = append(opts, grpc.Timeout(confServer.Grpc.Timeout.AsDuration()))
 	}
 	srv := grpc.NewServer(opts...)
-	pb.RegisterGreeterServer(srv, greeter)
+	pb.RegisterGreeterServer(srv, service)
 	return srv, nil
 }
 
 // NewHTTPServer new HTTP server.
-func NewHTTPServer(confServer *conf.Server, greeter *service.GreeterService, logger log.Logger) (*http.Server, error) {
+func NewHTTPServer(confServer *conf.Server, service *service.GreeterService, logger log.Logger) (*http.Server, error) {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -66,6 +66,6 @@ func NewHTTPServer(confServer *conf.Server, greeter *service.GreeterService, log
 	}
 	srv := http.NewServer(opts...)
 	srv.Handle("/metrics", promhttp.Handler())
-	pb.RegisterGreeterHTTPServer(srv, greeter)
+	pb.RegisterGreeterHTTPServer(srv, service)
 	return srv, nil
 }
