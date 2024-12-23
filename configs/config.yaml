@@ -23,5 +23,3 @@ data:
     ssl_mode: disable
 #trace:
 #  endpoint: http://localhost:14268/api/traces
-#sentry:
-#  dsn: http://localhost:8999
